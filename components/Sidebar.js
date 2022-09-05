@@ -1,5 +1,6 @@
 import Image from 'next/image'
-import React from 'react'
+import React, { useContext } from 'react'
+import { AmazonContext } from '../context/AmazonContext'
 import { ConnectButton } from 'web3uikit'
 import Link from 'next/link'
 import logo from '../assets/amazon_logo.png'
@@ -9,8 +10,7 @@ import { BsFillBookmarkFill, BsFillPersonFill } from 'react-icons/bs'
 import { AiOutlineHistory } from 'react-icons/ai'
 import icon from '../styles/Screenshot 2022-02-08 235521.png'
 
-const isAuthenticated = true;
-const username = 'shedrack';
+
 
 const Sidebar = () => {
     const styles = {
@@ -26,6 +26,14 @@ const Sidebar = () => {
         menuItem: `flex items-center text-lg font-bold cursor-pointer gap-2`,
         amazonLogo: `mr-4 flex object-cover`,
     }
+
+    const {
+        isAuthenticated,
+        nickname,
+        setNickName,
+        username,
+        handleSetUsername
+    } = useContext(AmazonContext)
 
   return (
     <div className={styles.container}>
@@ -48,13 +56,13 @@ const Sidebar = () => {
                     type='text'
                     placeholder='Username....'
                     className={styles.usernameInput}
-                    // value={nickname}
-                    // onChange={e => setNickname(e.target.value)}
+                    value={nickname}
+                    onChange={e => setNickname(e.target.value)}
                   />
                 </div>
                 <button
                   className={styles.setNickname}
-                //   onClick={handleSetUsername}
+                  onClick={handleSetUsername}
                 >
                   Set Nickname
                 </button>
