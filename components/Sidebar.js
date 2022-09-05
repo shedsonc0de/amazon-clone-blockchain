@@ -14,7 +14,7 @@ import icon from '../styles/Screenshot 2022-02-08 235521.png'
 
 const Sidebar = () => {
     const styles = {
-        container: 'h-full w-[300px] flex flex-col bg=[#ff] static',
+        container: 'h-full w-[300px] flex flex-col bg=[#fff] static',
         profile: 'w-full py-16 flex flex-col justify-center items-center',
         profilePicContainer: 'flex rounded-xl items-center justify-center bg-blue-200',
         profilePic: 'rounded-3xl object-cover',
@@ -28,21 +28,25 @@ const Sidebar = () => {
     }
 
     const {
-        isAuthenticated,
-        nickname,
+        //isAuthenticated,
+        // nickname,
         setNickName,
         username,
         handleSetUsername
     } = useContext(AmazonContext)
 
+    const nickname = 'shedrack'
+    const isAuthenticated = true
+
   return (
     <div className={styles.container}>
       <div className={styles.profile}>
         {isAuthenticated && (
-          <>
+            // i will turn i to <></> back
+          <div className=' bg-slate-600 flex flex-col justify-center items-center'> 
             <div className={styles.profilePicContainer}>
               <Image
-                src={`https://avatars.dicebear.com/api/pixel-art/${username}.svg`}
+                src={`https://avatars.dicebear.com/api/miniavs/${username}.svg`}
                 alt='profile'
                 className={styles.profilePic}
                 height={100}
@@ -72,7 +76,7 @@ const Sidebar = () => {
                 <div className={styles.welcome}>Welcome {username}</div>
               </div>
             )}
-          </>
+          </div>
         )}
         <div className={styles.connectButton}>
               <ConnectButton /> 

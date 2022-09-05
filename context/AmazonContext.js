@@ -2,6 +2,9 @@ import { createContext, useState, useEffect } from "react";
 import { useMoralis } from "react-moralis";
 
 export const AmazonContext = createContext();
+const [assets, setAssets] = useState([
+    
+])
 
 
 export const AmazonProvider = ({children}) => { 
