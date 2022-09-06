@@ -1,15 +1,13 @@
 import { createContext, useState, useEffect } from "react";
-import { useMoralis } from "react-moralis";
+import { useMoralis, useMoralisQuery } from "react-moralis";
 
 export const AmazonContext = createContext();
-const [assets, setAssets] = useState([
-    
-])
 
 
 export const AmazonProvider = ({children}) => { 
     const [username, setUserName] = useState('')
     const [nickname, setNickName] = useState('')
+    const [assets, setAssets] = useState([])
 
     const {
         authenticate,
@@ -20,6 +18,11 @@ export const AmazonProvider = ({children}) => {
         isWeb3Enabled,
     } = useMoralis()
 
+    const {
+       data: assetsData,
+       error: assetsDataError, 
+       isLoading: assetsDataisLoading
+    } = useMoralisQuery('assets')
     useEffect(() => {
         ;(async() => {
             if (isAuthenticated) {
@@ -28,6 +31,14 @@ export const AmazonProvider = ({children}) => {
             }
         })()
     }, [isAuthenticated, user, username])
+
+    useEffect(() => {
+        ;(async() => {
+            if(isWeb3Enabled) {
+                await getAssets()
+            }
+        })()
+    }, [assetsData, isWeb3Enabled, assetsDataisLoading])
 
     const handleSetUsername = () => {
         if (user) {
@@ -41,6 +52,15 @@ export const AmazonProvider = ({children}) => {
         }
     }
 
+    const getAssets = async () => {
+        try {
+            await enableWeb3()
+            setAssets(assetsData)
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
  return (
     <AmazonContext.Provider
         value={{
@@ -48,11 +68,12 @@ export const AmazonProvider = ({children}) => {
             nickname,
             setNickName,
             username,
-            handleSetUsername
+            handleSetUsername,
+            assets,
+            assetsData
         }}
     >
         {children}
     </AmazonContext.Provider>
  )
 };
-
