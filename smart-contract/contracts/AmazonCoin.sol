@@ -8,6 +8,8 @@ contract AmazonCoin is ERC20, Ownable {
 
     function mint(uint256 amount) public payable {
         require(msg.value == amount * 0.0001 ether, "invalid amount of ether");
-        _mint(to, amount);
+        _mint(msg.sender, amount);
     }
+    receive() external payable{}
+    fallback() external payable{}
 }
